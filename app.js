@@ -1,34 +1,66 @@
-// Referencias a los elementos
-const notifContainer = document.getElementById('notification-container');
-const airdropBox = notifContainer.querySelector('.airdrop-pop');
-const messagePreview = notifContainer.querySelector('.message-preview');
+const airdropTarget = document.getElementById('airdrop-target');
+const modal = document.querySelector('.airdrop-modal');
+const audio = document.getElementById('haptic-audio');
 
-function simulateRecibir() {
-    // 1. Cambiar el texto de la notificación
-    messagePreview.innerText = "¡Mensaje de Choque Recibido!";
+function triggerRecibir() {
+    // Resetear estados
+    airdropTarget.classList.remove('hidden');
+    modal.classList.remove('animate-in', 'animate-impact', 'animate-out');
+    document.getElementById('status-text').innerText = "Nuevo mensaje detectado";
 
-    // 2. Mostrar contenedor y reiniciar animaciones
-    notifContainer.classList.remove('hidden');
-    airdropBox.classList.remove('animate-airdrop', 'animate-choque');
-    
-    // Forzar un "reflow" para que el navegador reinicie la animación
-    void airdropBox.offsetWidth;
+    // 1. Entrada de AirDrop
+    void modal.offsetWidth; // Reiniciar animación
+    modal.classList.add('animate-in');
 
-    // 3. Aplicar animaciones: Combinación de AirDrop In y Choque Neón
-    airdropBox.classList.add('animate-airdrop');
-    
-    // Esperar un poco a que entre para que dé el "choque"
+    // 2. El Choque (Impacto visual + Vibración)
     setTimeout(() => {
-        airdropBox.classList.add('animate-choque');
+        modal.classList.add('animate-impact');
         
-        // Simular vibración háptica del iPhone si está soportado
-        if ('vibrate' in navigator) {
-            navigator.vibrate([100, 50, 100]); // Vibración doble corta
+        // Vibración háptica real de iPhone
+        if (navigator.vibrate) {
+            // Patrón de choque: Fuerte - Pausa - Doble suave
+            navigator.vibrate([100, 30, 50, 30, 50]);
+        }
+    }, 500);
+
+    // Ocultar solo después de 4 segundos
+    setTimeout(() => { 
+        if(!modal.classList.contains('animate-out')) {
+            airdropTarget.classList.add('hidden');
+        }
+    }, 4500);
+}
+
+function triggerEnviar() {
+    modal.classList.remove('animate-in', 'animate-impact', 'animate-out');
+    airdropTarget.classList.remove('hidden');
+    document.getElementById('status-text').innerText = "Enviando por AirDrop...";
+    
+    modal.style.opacity = "1";
+    modal.style.transform = "scale(1)";
+
+    // Efecto de salida (vuelo) + Vibración corta
+    setTimeout(() => {
+        modal.classList.add('animate-out');
+        if (navigator.vibrate) {
+            navigator.vibrate(20); 
         }
     }, 400);
 
-    // 4. Ocultar automáticamente después de unos segundos (como iOS)
-    setTimeout(() => {
-        notifContainer.classList.add('hidden');
-    }, 4000);
-               }
+    setTimeout(() => { airdropTarget.classList.add('hidden'); }, 1200);
+}
+
+function reproducirEstado() {
+    // Al abrir un estado, vibra sutilmente y suena
+    if (navigator.vibrate) {
+        navigator.vibrate([15, 20, 15]);
+    }
+    
+    // Intentar reproducir el audio
+    audio.play().catch(e => {
+        console.log("El iPhone requiere un toque previo para sonar.");
+        // Si falla, mostramos un mensaje sutil
+        document.getElementById('status-text').innerText = "Toca para activar sonido";
+        triggerRecibir();
+    });
+        }
