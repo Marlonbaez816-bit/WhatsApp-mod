@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>AirdropZap</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AirdropZap">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="notification-container" class="hidden">
+        <div class="airdrop-pop">
+            <div class="airdrop-icon">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/user-male-circle.png" alt="User">
+            </div>
+            <div class="airdrop-content">
+                <span class="sender">Nuevo Mensaje</span>
+                <span class="message-preview">Simulando efecto AirDrop...</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-interface">
+        <header class="ios-header">
+            <span>Chats</span>
+        </header>
+        
+        <div class="chat-list">
+            <div class="chat-item">
+                <div class="avatar">JR</div>
+                <div class="chat-info">
+                    <div class="chat-name">Juan R (XR 17.0.3)</div>
+                    <div class="chat-last-msg">Toca abajo para probar los efectos</div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="demo-controls">
+            <button onclick="simulateRecibir()" class="btn-recibir">Recibir (Choque + Airdrop)</button>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+                  </html>
