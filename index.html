@@ -3,48 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>AirdropZap</title>
+    <title>Airdrop-Mod</title>
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="AirdropZap">
+    <meta name="apple-mobile-web-app-title" content="AirdropMod">
     
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="notification-container" class="hidden">
-        <div class="airdrop-pop">
-            <div class="airdrop-icon">
-                <img src="https://img.icons8.com/ios-filled/50/ffffff/user-male-circle.png" alt="User">
+    <div id="airdrop-target" class="hidden">
+        <div class="airdrop-modal">
+            <div class="airdrop-ring">
+                <div class="inner-icon">A</div>
             </div>
-            <div class="airdrop-content">
-                <span class="sender">Nuevo Mensaje</span>
-                <span class="message-preview">Simulando efecto AirDrop...</span>
+            <div class="airdrop-text">
+                <strong id="sender-name">iPhone de Marlon</strong>
+                <span id="status-text">Recibiendo mensaje...</span>
             </div>
         </div>
     </div>
 
-    <div class="app-interface">
-        <header class="ios-header">
-            <span>Chats</span>
-        </header>
-        
-        <div class="chat-list">
-            <div class="chat-item">
-                <div class="avatar">JR</div>
-                <div class="chat-info">
-                    <div class="chat-name">Juan R (XR 17.0.3)</div>
-                    <div class="chat-last-msg">Toca abajo para probar los efectos</div>
+    <div class="app-container">
+        <header class="header">
+            <div class="status-bar-spacer"></div>
+            <div class="header-content">
+                <h1>Chats</h1>
+                <div class="header-icons">
+                    <span>📸</span>
+                    <span>➕</span>
                 </div>
             </div>
-        </div>
+            <div class="search-container">
+                <input type="text" placeholder="Buscar" class="search-input">
+            </div>
+        </header>
 
-        <footer class="demo-controls">
-            <button onclick="simulateRecibir()" class="btn-recibir">Recibir (Choque + Airdrop)</button>
+        <main class="chat-list">
+            <div class="chat-item" onclick="reproducirEstado()">
+                <div class="avatar-container status-active">
+                    <div class="avatar-placeholder">M</div>
+                </div>
+                <div class="chat-info">
+                    <div class="chat-top">
+                        <span class="user-name">Estado con Audio</span>
+                        <span class="time">ahora</span>
+                    </div>
+                    <p class="last-msg">Toca para probar audio y vibración</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="test-panel">
+            <button class="btn-action receive" onclick="triggerRecibir()">Simular Choque (In)</button>
+            <button class="btn-action send" onclick="triggerEnviar()">Efecto AirDrop (Out)</button>
         </footer>
     </div>
 
+    <audio id="haptic-audio" src="audio.mp3"></audio>
+
     <script src="app.js"></script>
 </body>
-                  </html>
+    </html>
